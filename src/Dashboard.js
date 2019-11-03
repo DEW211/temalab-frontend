@@ -15,9 +15,10 @@ import Paper from '@material-ui/core/Paper';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { mainListItems, secondaryListItems } from './listItems';
-import Deposits from './Deposits';
+import SwitchCard from './ControllCard';
 import { Copyright } from './Copyright';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { Switch } from '@material-ui/core';
 
 const theme = createMuiTheme({
   palette: {
@@ -107,7 +108,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'column',
   },
   fixedHeight: {
-    height: 240,
+    height: 100,
   },
 }));
 
@@ -163,12 +164,12 @@ export default function Dashboard() {
               {/* Recent Deposits */}
               <Grid item xs={12} md={4} lg={3}>
                 <Paper className={fixedHeightPaper}>
-                  <Deposits />
+                  <SwitchCard labelText="Lights" entityID="switch.decorative_lights"/>
                 </Paper>
               </Grid>
               <Grid item xs={12} md={4} lg={3}>
                 <Paper className={fixedHeightPaper}>
-                  <Deposits />
+                  <SwitchCard labelText="AC" entityID="switch.ac" />
                 </Paper>
               </Grid>
             </Grid>

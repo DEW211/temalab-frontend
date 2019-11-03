@@ -1,11 +1,11 @@
 import React from 'react';
 import Dashboard from './Dashboard';
-import SignIn from './SignIn';
+//import SignIn from './SignIn';
+import SignIn from './SignInClass'
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from 'react-router-dom';
 
 
