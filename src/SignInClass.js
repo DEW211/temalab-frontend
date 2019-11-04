@@ -123,7 +123,7 @@ class SignIn extends Component {
               color="primary"
               className={classes.submit}
             >
-              Sign in{this.state.loggedIn.toString()}
+              Sign in
             </Button>
           </form>
         </div>
