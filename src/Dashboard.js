@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -19,6 +19,7 @@ import SwitchCard from './ControllCard';
 import { Copyright } from './Copyright';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Switch } from '@material-ui/core';
+import connect from "./connection"
 
 const theme = createMuiTheme({
   palette: {
@@ -122,6 +123,10 @@ export default function Dashboard() {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  useEffect(() => {
+      connect();
+  })
 
   return (
     <div className={classes.root}>

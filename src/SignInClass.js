@@ -53,13 +53,13 @@ class SignIn extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-   handleSubmit(event){
+   async handleSubmit(event){
     event.preventDefault();
     if(this.state.user === 'admin' && this.state.password === 'be smart'){
       this.setState({
         loggedIn: true,
       })
-      connect();
+      
 
     }
   }
