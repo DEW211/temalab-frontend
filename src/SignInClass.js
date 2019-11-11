@@ -53,14 +53,13 @@ class SignIn extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  async handleSubmit(event){
+   handleSubmit(event){
     event.preventDefault();
     if(this.state.user === 'admin' && this.state.password === 'be smart'){
       this.setState({
         loggedIn: true,
       })
-      await connect();
-      console.log('valami');
+      connect();
 
     }
   }
