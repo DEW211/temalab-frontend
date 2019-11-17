@@ -23,7 +23,7 @@ export default async function connect() {
 		} catch (err) {
 			if (err === ERR_HASS_HOST_REQUIRED) {
 				const hassUrl = 'https://demo.nt.t-bond.hu/';
-				auth = await getAuth({ hassUrl,  redirectUrl: "http://localhost:3000/dashboard"});
+				auth = await getAuth({ hassUrl });
 			} else {
 				alert(`Unkown error: ${err}`);
 				return;
