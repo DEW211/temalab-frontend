@@ -1,12 +1,11 @@
 import React from 'react';
-import Dashboard from './Dashboard';
-//import SignIn from './SignIn';
-import SignIn from './SignInClass'
+import SignIn from './Components/Login/SignInClass'
 import {
   BrowserRouter as Router,
   Switch,
   Route
 } from 'react-router-dom';
+import DashboardWrapper from './Components/Dashboard/DashboardWrapper'
 
 
 
@@ -29,7 +28,7 @@ function App() {
           <SignIn />
         </Route>
         <Route path="/dashboard">
-          <Dashboard />
+          <DashboardWrapper />
         </Route>
       </Switch>
     </div>
