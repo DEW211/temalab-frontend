@@ -11,7 +11,7 @@ import store from '../../Redux/store'
 var single = 'undefined';
 
 function dispatch(newState){
-	console.log(newState);
+	//console.log(newState);
 	store.dispatch(updateAction(newState));
 }
 

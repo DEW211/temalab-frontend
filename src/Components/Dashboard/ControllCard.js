@@ -21,7 +21,7 @@ class SwitchCard extends React.Component {
 
 		axios({
 			method: 'post',
-			url: 'https://temalab-backend.herokuapp.com/',
+			url: 'https://temalab-backend.herokuapp.com/api/states',
 			data: {
 				entityID: this.props.entityID.toString(),
 				state: this.props.state === true ? 'off' : 'on'

@@ -31,6 +31,9 @@ import AssignmentIcon from '@material-ui/icons/AccountBoxRounded';
 import LogbookIcon from '@material-ui/icons/List';
 import MapIcon from '@material-ui/icons/Map';
 import { ListItemAvatar } from '@material-ui/core';
+import History from '../../Components/History/History'
+import Logbook from '../../Components/Logbook/Logbook'
+
 const theme = createMuiTheme({
 	palette: {
 		primary: {
@@ -191,8 +194,8 @@ function Dashboard(props) {
 				></iframe>
 			</div>
 		),
-		History: <div></div>,
-		Logbook: <div></div>
+		History: <React.Fragment><History /></React.Fragment>,
+		Logbook: <React.Fragment><Logbook /></React.Fragment>
 	};
 
 	return (
