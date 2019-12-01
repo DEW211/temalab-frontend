@@ -21,6 +21,7 @@ import { changeToDashboardTab } from '../../Redux/Actions/changeToDashboardTab';
 import { changeToHistoryTab } from '../../Redux/Actions/changeToHistoryTab';
 import { changeToLogbookTab } from '../../Redux/Actions/changeToLogbookTab';
 import { changeToMapTab } from '../../Redux/Actions/changeToMapTab';
+import { changeToAutomationsTab } from '../../Redux/Actions/changeToAutomationsTab';
 import { connect } from 'react-redux';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -31,8 +32,12 @@ import AssignmentIcon from '@material-ui/icons/AccountBoxRounded';
 import LogbookIcon from '@material-ui/icons/List';
 import MapIcon from '@material-ui/icons/Map';
 import { ListItemAvatar } from '@material-ui/core';
-import History from '../../Components/History/History'
-import Logbook from '../../Components/Logbook/Logbook'
+import History from '../../Components/History/History';
+import Logbook from '../../Components/Logbook/Logbook';
+import WeatherForecast from '../Weather/WeatherForecast';
+import CurrentWeather from '../Weather/CurrentWeather';
+import AutomationCard from '../Automation/AutomationCard'
+import AutomationsPage from '../Automation/AutomationsPage'
 
 const theme = createMuiTheme({
 	palette: {
@@ -123,6 +128,9 @@ const useStyles = makeStyles(theme => ({
 	},
 	fixedHeight: {
 		height: 100
+	},
+	weatherPaper: {
+		marginTop: theme.spacing(4)
 	}
 }));
 
@@ -143,16 +151,19 @@ function Dashboard(props) {
 			<React.Fragment>
 				<div className={classes.appBarSpacer} />
 				<Container maxWidth="lg" className={classes.container}>
-					<Grid container spacing={3}>
+					<Grid container justify="center"  spacing={3}>
+					{(props.stateReducer.switches !== undefined)?
+						props.stateReducer.switches.map(value => {
+							return(<Grid container spacing={3}>
 						<Grid item xs={12} md={4} lg={3}>
 							<Paper className={fixedHeightPaper}>
 								<SwitchCard
-									labelText="Lights"
-									entityID="switch.decorative_lights"
+									labelText={(Object.keys(props.stateReducer[value].attributes).length !== 0)? props.stateReducer[value].attributes.friendly_name : value.split('.')[1]}
+									entityID={value}
 									state={
-										props.stateReducer['switch.decorative_lights'] === undefined
+										props.stateReducer[value] === undefined
 											? false
-											: props.stateReducer['switch.decorative_lights'].state ===
+											: props.stateReducer[value].state ===
 											  'on'
 											? true
 											: false
@@ -160,28 +171,138 @@ function Dashboard(props) {
 								/>
 							</Paper>
 						</Grid>
+						</Grid>)
+						})
+						
+
+						
+					:("No connection")}
+					{(props.stateReducer.switches !== undefined)?
+						props.stateReducer.automations.map(value => {
+							return(<Grid container spacing={3}>
 						<Grid item xs={12} md={4} lg={3}>
 							<Paper className={fixedHeightPaper}>
-								<SwitchCard
-									labelText="AC"
-									entityID="switch.ac"
+								<AutomationCard
+									labelText={(Object.keys(props.stateReducer[value].attributes).length !== 0)? props.stateReducer[value].attributes.friendly_name : value.split('.')[1]}
+									entityID={value}
 									state={
-										props.stateReducer['switch.ac'] === undefined
+										props.stateReducer[value] === undefined
 											? false
-											: props.stateReducer['switch.ac'].state === 'on'
+											: props.stateReducer[value].state ===
+											  'on'
 											? true
 											: false
 									}
 								/>
 							</Paper>
 						</Grid>
+						</Grid>)
+						})
+						
+
+						
+					:("No connection")}
+					</Grid>
+				</Container>
+				<Container maxWidth="lg" className={classes.container}>
+					<Paper className={classes.weatherPaper}>
+						<WeatherForecast
+							condition={
+								props.stateReducer['weather.b_smart_home'] !== undefined
+									? [
+											props.stateReducer['weather.b_smart_home'].attributes
+												.forecast[0].condition,
+											props.stateReducer['weather.b_smart_home'].attributes
+												.forecast[1].condition,
+											props.stateReducer['weather.b_smart_home'].attributes
+												.forecast[2].condition
+									  ]
+									: ['Loading', 'Loading', 'Loading']
+							}
+							pressure={
+								props.stateReducer['weather.b_smart_home'] !== undefined
+									? [
+											props.stateReducer['weather.b_smart_home'].attributes
+												.forecast[0].pressure,
+											props.stateReducer['weather.b_smart_home'].attributes
+												.forecast[1].pressure,
+											props.stateReducer['weather.b_smart_home'].attributes
+												.forecast[2].pressure
+									  ]
+									: ['Loading', 'Loading', 'Loading']
+							}
+							temp={
+								props.stateReducer['weather.b_smart_home'] !== undefined
+									? [
+											props.stateReducer['weather.b_smart_home'].attributes
+												.forecast[0].temperature,
+											props.stateReducer['weather.b_smart_home'].attributes
+												.forecast[1].temperature,
+											props.stateReducer['weather.b_smart_home'].attributes
+												.forecast[2].temperature
+									  ]
+									: ['Loading', 'Loading', 'Loading']
+							}
+							humidity={
+								props.stateReducer['weather.b_smart_home'] !== undefined
+									? [
+											props.stateReducer['weather.b_smart_home'].attributes
+												.forecast[0].humidity,
+											props.stateReducer['weather.b_smart_home'].attributes
+												.forecast[1].humidity,
+											props.stateReducer['weather.b_smart_home'].attributes
+												.forecast[2].humidity
+									  ]
+									: ['Loading', 'Loading', 'Loading']
+							}
+							windSpeed={
+								props.stateReducer['weather.b_smart_home'] !== undefined
+									? [
+											props.stateReducer['weather.b_smart_home'].attributes
+												.forecast[0].wind_speed,
+											props.stateReducer['weather.b_smart_home'].attributes
+												.forecast[1].wind_speed,
+											props.stateReducer['weather.b_smart_home'].attributes
+												.forecast[2].wind_speed
+									  ]
+									: ['Loading', 'Loading', 'Loading']
+							}
+							windBearing={
+								props.stateReducer['weather.b_smart_home'] !== undefined
+									? [
+											props.stateReducer['weather.b_smart_home'].attributes
+												.forecast[0].wind_bearing,
+											props.stateReducer['weather.b_smart_home'].attributes
+												.forecast[1].wind_bearing,
+											props.stateReducer['weather.b_smart_home'].attributes
+												.forecast[2].wind_bearing
+									  ]
+									: ['Loading', 'Loading', 'Loading']
+							}
+						/>
+					</Paper>
+					<Grid container>
+						<Paper className={classes.weatherPaper}>
+							<CurrentWeather
+								temp={
+									props.stateReducer['weather.b_smart_home'] !== undefined
+										? props.stateReducer['weather.b_smart_home'].attributes
+												.temperature
+										: 'Loading'
+								}
+								humidity={(props.stateReducer['weather.b_smart_home'] !== undefined)?(props.stateReducer['weather.b_smart_home'].attributes.humidity):("Loading")}
+								pressure={(props.stateReducer['weather.b_smart_home'] !== undefined)?(props.stateReducer['weather.b_smart_home'].attributes.pressure):("Loading")}
+								wind_speed={(props.stateReducer['weather.b_smart_home'] !== undefined)?(props.stateReducer['weather.b_smart_home'].attributes.wind_speed):("Loading")}
+								wind_bearing={(props.stateReducer['weather.b_smart_home'] !== undefined)?(props.stateReducer['weather.b_smart_home'].attributes.wind_bearing):("Loading")}
+							/>
+						</Paper>
 					</Grid>
 				</Container>
 			</React.Fragment>
 		),
 		Map: (
 			<div>
-        <div className={classes.appBarSpacer} />
+				<div className={classes.appBarSpacer} />
 				<iframe
 					title="map"
 					width="100%"
@@ -194,8 +315,22 @@ function Dashboard(props) {
 				></iframe>
 			</div>
 		),
-		History: <React.Fragment><History /></React.Fragment>,
-		Logbook: <React.Fragment><Logbook /></React.Fragment>
+		History: (
+			<React.Fragment>
+				<History />
+			</React.Fragment>
+		),
+		Logbook: (
+			<React.Fragment>
+				<Logbook />
+			</React.Fragment>
+		),
+		Automation: (
+			<React.Fragment>
+			<AutomationsPage entities={props.stateReducer.switches}/>	
+			
+			</React.Fragment>
+		)
 	};
 
 	return (
@@ -277,19 +412,18 @@ function Dashboard(props) {
 							</ListItemIcon>
 							<ListItemText primary="History" />
 						</ListItem>
-					</List>
-					<Divider />
-					<List>
-						<ListItem button>
-							<ListItemAvatar>
-								<AssignmentIcon />
-							</ListItemAvatar>
-							<ListItemText primary="My Account" />
+						<ListItem button onClick={props.changeToAutomationsTab}>
+							<ListItemIcon>
+								<BarChartIcon />
+							</ListItemIcon>
+							<ListItemText primary="Automations" />
 						</ListItem>
 					</List>
+					
+					
 				</Drawer>
 				<main className={classes.content}>
-            {TABS[props.tabReducer.currentPage]}
+					{TABS[props.tabReducer.currentPage]}
 					<Copyright />
 				</main>
 			</ThemeProvider>
@@ -304,7 +438,7 @@ export default connect(mapSateToProps, {
 	changeToDashboardTab,
 	changeToHistoryTab,
 	changeToLogbookTab,
-	changeToMapTab
+	changeToMapTab,
+	changeToAutomationsTab
 })(Dashboard);
 
-/* export const mainListItems =  connect(null, )(MainListItems); */

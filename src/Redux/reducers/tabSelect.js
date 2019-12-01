@@ -1,4 +1,4 @@
-import { DASHBOARD, MAP, LOGBOOK, HISTORY } from '../actionTypes'
+import { DASHBOARD, MAP, LOGBOOK, HISTORY, AUTOMATIONS } from '../actionTypes'
 
 const initialState = {currentPage: "Dashboard"};
 
@@ -26,6 +26,11 @@ export default function(state = initialState, action){
             return {
                 
                 currentPage: 'History'
+            }
+        }
+        case AUTOMATIONS: {
+            return {
+                currentPage: 'Automation'
             }
         }
 

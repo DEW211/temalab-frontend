@@ -3,3 +3,4 @@ export const MAP = 'MAP';
 export const LOGBOOK = 'LOGBOOK';
 export const HISTORY = 'HISTORY';
 export const DASHBOARD = 'DASHBOARD';
+export const AUTOMATIONS = 'AUTOMATIONS';
